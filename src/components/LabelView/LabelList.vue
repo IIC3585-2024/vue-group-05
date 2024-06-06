@@ -12,7 +12,7 @@ const { labels } = labelsStore;
         <div v-if="labels.length === 0" class="bg-white p-6 rounded-lg shadow-md">
 		    <p class="text-gray-500">No labels found.</p>
         </div>
-        <div v-if="labels.length !== 0" class="flex justify-center items-center">
+        <div v-if="labels.length !== 0" class="flex flex-wrap mb-4 justify-center">
             <LabelItem v-for="label in labels" :key="label.id" :label="label" />
         </div>
     </div>
