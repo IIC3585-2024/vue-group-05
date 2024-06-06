@@ -5,11 +5,13 @@ import ProjectsView from './views/ProjectsView.vue'
 import LoginView from './views/LoginView.vue'
 import RegisterView from './views/RegisterView.vue'
 import CalendarView from './views/CalendarView.vue'
+import LabelsView from './views/LabelsView.vue'
 
 const routes = [
   { path: '/', component: HomeView },
   { path: '/tasks', component: TaskView },
   { path: '/projects', component: ProjectsView },
+  { path: '/labels', component: LabelsView },
   { path: '/login', component: LoginView },
   { path: '/register', component: RegisterView },
   { path: '/calendar', component: CalendarView }
