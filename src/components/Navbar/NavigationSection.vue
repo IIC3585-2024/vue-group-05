@@ -15,6 +15,8 @@ export default {
         <HomeButton />
         <NavbarButton route_name="/tasks" route_text="Time Tracker" />
         <NavbarButton route_name="/projects" route_text="Projects" />
-        <!-- <NavbarButton route_name="#/labels" route_text="Labels" /> -->
+        <NavbarButton route_name="/labels" route_text="Labels" />
+        <NavbarButton route_name="/calendar" route_text="Calendar" />
+
     </div>
 </template>
