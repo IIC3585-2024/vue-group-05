@@ -4,11 +4,15 @@ import TaskList from '../components/TasksView/TaskList.vue'
 import NewTask from '../components/TasksView/NewTask.vue'
 import { projectsStore } from '../stores/projects'
 import { tasksStore } from '../stores/tasks'
+import { labelsStore } from '../stores/labels'
+// import { tasksLabelsStore } from '../stores/tasksLabels'
 
 const session = inject('session')
 
 const { fetchProjects } = projectsStore
 const { fetchTasks } = tasksStore
+const { fetchLabels } = labelsStore
+// const { fetchTasksLabels } = tasksLabelsStore
 
 onMounted(() => {
   if (!session.value) {
@@ -16,6 +20,8 @@ onMounted(() => {
   }
   fetchProjects(session.value.user.id)
   fetchTasks(session.value.user.id)
+  fetchLabels(session.value.user.id)
+  // fetchTasksLabels(session.value.user.id)
 })
 
 </script>
