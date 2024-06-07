@@ -1,11 +1,11 @@
 <script setup>
 import { onMounted, inject } from 'vue'
-import NewProject from '../components/ProjectsView/NewProject.vue'
-import ProjectList from '../components//ProjectsView/ProjectList.vue'
-import { projectsStore } from '../stores/projects'
-import { tasksStore } from '../stores/tasks'
-import { holidaysStore } from '../stores/holidays'
-import { labelsStore } from '../stores/labels'
+import NewProject from '../../components/ProjectsView/NewProject.vue'
+import ProjectList from '../../components//ProjectsView/ProjectList.vue'
+import { projectsStore } from '../../stores/projects'
+import { tasksStore } from '../../stores/tasks'
+import { holidaysStore } from '../../stores/holidays'
+import { labelsStore } from '../../stores/labels'
 
 const session = inject('session')
 
