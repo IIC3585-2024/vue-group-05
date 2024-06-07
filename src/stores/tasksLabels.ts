@@ -2,9 +2,9 @@ import { ref } from "vue";
 import { supabase } from "../supabaseClient";
 import type { CreateTaskLabel, TaskLabel, Task } from "../ts/interfaces";
 
-function createTaskLabelsStore() {
+export function createTaskLabelsStore() {
   const tasksLabels = ref<TaskLabel[]>([]);
-  
+
   const fetchTaskLabels = async (taskId: string): Promise<TaskLabel[]> => {
     const { data, error } = await supabase
       .from("task_labels")
@@ -50,6 +50,8 @@ function createTaskLabelsStore() {
       })
     );
     tasksLabels.value = tasksLabelsCurrent.flat();
+    console.log("ALL DATA", tasksLabels);
+    console.log("ALL DATA", tasksLabels.value);
   };
 
   return {

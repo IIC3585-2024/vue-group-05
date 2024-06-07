@@ -22,13 +22,17 @@ onMounted(() => {
 })
 
 
+
 const project = computed(() => {
   return projects.value.find((project) => project.id.toString() == projectId);
 });
 
+
 const projectTasks = computed(() => {
   return tasks.value.filter((task) => task.projectId.toString() == projectId);
 });
+
+console.log('projectTasks', projectTasks.value)
 const totalCost = computed(() => {
   return projectTasks.value.reduce((acc, task) => acc + task.cost, 0);
 });
