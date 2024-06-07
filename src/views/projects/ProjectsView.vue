@@ -5,12 +5,14 @@ import ProjectList from '../../components//ProjectsView/ProjectList.vue'
 import { projectsStore } from '../../stores/projects'
 import { tasksStore } from '../../stores/tasks'
 import { holidaysStore } from '../../stores/holidays'
+import { labelsStore } from '../../stores/labels'
 
 const session = inject('session')
 
 const { fetchProjects } = projectsStore
 const { fetchTasks } = tasksStore
 const { fetchHolidays } = holidaysStore
+const { fetchLabels } = labelsStore
 
 onMounted(() => {
   if (!session.value) {
@@ -18,6 +20,7 @@ onMounted(() => {
   }
   fetchProjects(session.value.user.id)
   fetchTasks(session.value.user.id)
+  fetchLabels(session.value.user.id)
   fetchHolidays(2024)
 })
 

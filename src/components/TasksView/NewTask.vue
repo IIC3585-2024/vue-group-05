@@ -2,15 +2,20 @@
 import { ref, inject } from 'vue';
 import { Icon } from '@iconify/vue';
 import { format } from "date-fns";
-import { tasksStore } from '../../stores/tasks';
+import { tasksStore } from '@/stores/tasks';
+import { projectsStore } from '@/stores/projects';
+import { labelsStore } from '@/stores/labels';
+import { tasksLabelsStores } from '@/stores/tasksLabels';
 import ProjectsSelection from '../ProjectsView/ProjectsSelection.vue';
+
+import Labels from '../LabelView/Labels.vue';
 
 const session = inject('session')
 const { addTask } = tasksStore;
 
 let name = ref('');
 let project = ref(null);
-// let labels = ref([]);
+let Selectedlabels = ref([]);
 let startTime = ref(null);
 let stopTime = ref(null);
 let startDate = new Date();
@@ -19,17 +24,20 @@ let running = ref(false);
 let elapsedTime = ref(0);
 let interval;
 let onlyTime = ref(true);
+let cost = ref('');
 
 function clear() {
     name.value = "";
     project.value = null;
     // labels.value = [];
+	Selectedlabels.value = [];
     startTime.value = null;
     stopTime.value = null;
     startDate = new Date();
     stopDate = new Date();
     running.value = false;
     elapsedTime.value = 0;
+	cost.value = '';
     clearInterval(interval);
 }
 
@@ -52,18 +60,38 @@ function handleClick() {
     }
 }
 
-function createNewTask() {
+function addLabelsToTask() {
+	if (Selectedlabels.lenght == 0) return '';
+
+	let lenght = Selectedlabels.labels.value.length - 1;
+	let lastTask = labelsStore.labels.value[lenght]
+
+	Selectedlabels.map( (label) => {
+		tasksLabelsStores.add({
+			'labelId': label.toString(),
+			'taskId': lastTask.id
+		})
+	})
+}
+
+async function createNewTask() {
+	if (typeof cost.value === 'string') {
+		cost.value = parseFloat(cost.value);
+	}
+
 	console.log(startTime.value)
 	const newTask = {
 		name: name.value,
 		userId: session.value.user.id,
 		projectId: project?.id,
-		startTime: startTime.value,
-		stopTime: stopTime.value,
+		startTime: onlyTime ? format(startTime.value, "HH:mm:ss") : startTime.value,
+		stopTime: onlyTime ? format(stopTime.value, "HH:mm:ss") : stopTime.value,
 		startDate: format(startDate, "yyyy-MM-dd"),
 		stopDate: format(stopDate, "yyyy-MM-dd"),
+		cost: cost.value ? cost.value : 0,
 	};
-	addTask(newTask);
+	await addTask(newTask);
+	await addLabelsToTask();
 	clear();
 }
 </script>
@@ -77,7 +105,15 @@ function createNewTask() {
 	    		placeholder="What are you working on?"
 	    		class="flex-1 p-2 border rounded-lg"
 	    	/>
-			<ProjectsSelection v-model:project="project"/>
+			<input
+	    		type="number"
+	    		v-model="cost"
+	    		placeholder="Cost $"
+	    		class="flex-1 p-2 border rounded-lg max-w-32"
+				min="0"
+	    	/>
+			<ProjectsSelection v-model:project="project" />
+			<Labels :labels="labelsStore.labels.value" v-bind:Selectedlabels="Selectedlabels" />
 
 	    	<div v-if="running & onlyTime">
 	    		{{ new Date(elapsedTime).toISOString().slice(11, 19) }}
