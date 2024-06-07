@@ -1,6 +1,13 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
+// import Projects from '../LabelView/Projects.vue';
+
+import UsedTaskLabels from '../LabelView/UsedTaskLabels.vue';
+import Cost from '../LabelView/Cost.vue';
 import { tasksStore } from '../../stores/tasks.ts'
+import { projectsStore } from '../../stores/projects.ts';
+import { tasksLabelsStores } from '../../stores/tasksLabels.ts';
+import { labelsStore } from '../../stores/labels.ts';
 import { calculateTotalTime, formatTotalTime } from "../../utils/functions.ts";
 
 defineProps({
@@ -23,6 +30,7 @@ let possibleProjects = ref([]);
 	    <p class="flex-1 p-2">
 	      {{task.name}}
 	    </p>
+		<UsedTaskLabels :task="task" />
 	    <Projects :projects=possibleProjects />
 
 	    <!-- <Labels {possibleLabels} bind:labels /> -->

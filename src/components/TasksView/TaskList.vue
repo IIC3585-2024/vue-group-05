@@ -1,6 +1,6 @@
 <script setup>
-import { computed } from 'vue';
-import TaskItem from './TaskItem.vue';
+import { computed  } from 'vue'
+import TaskItem from './TaskItem.vue'
 import {
   calculateTotalTime,
   groupTasksByWeek,
@@ -14,7 +14,9 @@ const props = defineProps({
   },
 });
 
-const tasksArray = computed(() => props.tasks);
+
+const tasksArray = computed(() => props.tasks.value || []);
+
 </script>
 
 <template>
